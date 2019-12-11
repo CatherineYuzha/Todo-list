@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <title>Список задач</title>
+    <link rel="stylesheet" type="text/css" href="./build/css/style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <h1 class="header__item">Список задач</h1>
+      </header>
+
+      <ul id="todo-list">
+        <li class="todo-list__item">
+          <input class="todo-list__item-checkbox" type="checkbox" />
+          <input class="todo-list__item-textfield" type="text" />
+          <button class="todo-list__item-button">Изменить</button>
+          <button class="todo-list__item-button">Удалить</button>
+        </li>
+      </ul>
+
+      <form class="todo-form">
+        <input class="todo-form__input" type="text" />
+        <button class="todo-form__button" type="submit">
+          Добавить
+        </button>
+      </form>
+    </div>
+    <script type="text/javascript" src="./build/js/script.js"></script>
+  </body>
+</html>
