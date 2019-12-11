@@ -1,27 +1,33 @@
 document.addEventListener("DOMContentLoaded", function() {
-  let todos = [
+  const todos = [
     {
-      text: "Task",
+      text: "Заметка",
       done: true,
       edit: false
     },
     {
-      text: "Task1",
+      text: "заметка1",
+      done: false,
+      edit: false
+    },
+    {
+      text: "заметка2",
       done: false,
       edit: false
     }
   ];
 
-  let todo = document.querySelector(".todo-list");
+  const task = document.querySelector(".js-todo-list");
   let html = "";
 
-  for (let i = 0; i < todos.length; i++) {
-    const data = todos[i];
-    html += ` <li> ${todos[i].text}
-               ${todos[i].done}
-               ${todos[i].edit}
-              </li>`;
-  }
-
-  todo.innerHTML = html;
+  todos.map(
+    item =>
+      (html += `  <li class="todo-list__item">
+      <p class="todo-list__item-text">${item.text}</p>
+      <input class="todo-list__item-textfield" type="text" />
+      <button class="todo-list__item-button">Изменить</button>
+      <button class="todo-list__item-button">Удалить</button>
+    </li> `)
+  );
+  task.innerHTML = html;
 });

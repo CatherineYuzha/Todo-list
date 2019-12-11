@@ -14,29 +14,39 @@
   padding: 5px;
   background-color: $main-color;
   text-align: center;
+
   &__item {
     display: inline-block;
     color: white;
     margin: 1rem auto;
   }
 }
-.todo-list__item {
-  list-style: none;
-  display: flex;
-  font-size: $font-size;
-  background-color: white;
-  transition: all 0.2s;
-  padding: 1em;
-  align-items: center;
-  &-checkbox {
-    margin-right: 15px;
-  }
-  &-textfield {
-    margin-right: auto;
-    @include Input();
-  }
-  &-button {
-    @include Button();
+.todo-list {
+  &__item {
+    list-style: none;
+    display: flex;
+    font-size: $font-size;
+    background-color: white;
+    transition: all 0.2s;
+    padding: 1em;
+    align-items: center;
+
+    &-text {
+      color: black;
+      padding: 10px;
+      width: 70%;
+      border-bottom: 1px solid lightgray;
+    }
+
+    &-textfield {
+      display: none;
+      margin-right: auto;
+      @include Input();
+    }
+
+    &-button {
+      @include Button();
+    }
   }
 }
 
@@ -51,10 +61,12 @@
     outline: none;
     transition: all 0.2s;
     @include Input();
+
     &:focus {
       border: 1px solid $main-color;
     }
   }
+
   &__button {
     margin-left: 10px;
     @include Button();
