@@ -15,18 +15,15 @@
         <h1 class="header__item">Список задач</h1>
       </header>
 
-      <ul class="todo-list js-todo-list">
-        <li class="todo-list__item">
-          <p class="todo-list__item-text">Заметка</p>
-          <input class="todo-list__item-textfield" type="text" />
-          <button class="todo-list__item-button">Изменить</button>
-          <button class="todo-list__item-button">Удалить</button>
-        </li>
-      </ul>
+      <ul class="todo-list js-todo-list"></ul>
 
       <form class="todo-form">
-        <input class="todo-form__input" type="text" />
-        <button class="todo-form__button" type="submit">
+        <input class="todo-form__input js-input" type="text" />
+        <button
+          class="todo-form__button js-button"
+          type="submit"
+          onclick="return false"
+        >
           Добавить
         </button>
       </form>
