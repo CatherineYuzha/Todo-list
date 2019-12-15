@@ -1,62 +1,94 @@
 document.addEventListener("DOMContentLoaded", function() {
   let tasks = [
     {
-      text: "Заметка",
-      identifier: 1,
+      text: "Инициализация проекта",
+      id: new Date("11111").getDate,
       done: true,
-      edit: false
+      editing: false
     },
     {
-      text: "Заметка 1",
-      identifier: 2,
+      text: "Вывод существующих задач",
+      id: new Date("22222"),
       done: false,
-      edit: false
+      editing: false
     },
     {
-      text: "Заметка 2 ",
-      identifier: 3,
+      text: "Добавление задачи",
+      id: new Date("33333"),
       done: false,
-      edit: false
+      editing: false
+    },
+    {
+      text: "Редактирование",
+      id: new Date("44444"),
+      done: false,
+      editing: false
+    },
+    {
+      text: "Удаление",
+      id: new Date("55555"),
+      done: false,
+      editing: false
+    },
+    {
+      text: "Фиксирование статуса задачи (выполнено/невыполнено)",
+      id: new Date("66666"),
+      done: false,
+      editing: false
+    },
+    {
+      text: "Перемещение по списку(кнопками)",
+      id: new Date("77777"),
+      done: false,
+      editing: false
     }
   ];
   const $taskList = document.querySelector(".js-todo-list");
-  const $buttonAddTask = document.querySelector(".js-button");
-  const $inputAddTask = document.querySelector(".js-input");
+  const $addTaskButton = document.querySelector(".js-button");
+  const $addTaskInput = document.querySelector(".js-input");
 
+  //Отображение задач
   tasks.forEach(item => {
     $taskList.insertAdjacentHTML("beforeend", templateTask(item));
   });
 
-  const $buttons = document.querySelectorAll(".js-button-delete");
+  const $deleteButtons = document.querySelectorAll(".js-button-delete");
 
-  $buttonAddTask.addEventListener("click", function() {
-    if ($inputAddTask.value === "") {
+  //Добавление задачи
+  $addTaskButton.addEventListener("click", function() {
+    if ($addTaskInput.value === "") {
       return false;
     }
     const newTask = {
-      text: $inputAddTask.value,
+      text: $addTaskInput.value,
       done: false,
-      edit: false,
-      identifier: tasks.length + 1
+      editing: false,
+      id: Date.now()
     };
 
     tasks.push(newTask);
     $taskList.insertAdjacentHTML("beforeend", templateTask(newTask));
-    $inputAddTask.value = "";
-    removeButton($taskList.lastElementChild.querySelector(".js-button-delete"));
+    $addTaskInput.value = "";
+    console.log(tasks);
+    assignRemoveButton(
+      $taskList.lastElementChild.querySelector(".js-button-delete")
+    );
   });
 
-  $buttons.forEach(button => removeButton(button));
+  $deleteButtons.forEach(button => assignRemoveButton(button));
 
-  function removeButton(button) {
+  //Удаление задачи
+  function assignRemoveButton(button) {
     button.addEventListener("click", function(event) {
       const data = event.target.dataset;
 
-      tasks = tasks.filter(item => item.dataPosition !== data.id);
+      tasks = tasks.filter(item => item.id !== data.id);
+      console.log(tasks);
+      console.log(item.id);
+      console.log(data.id);
+      const childrenTaskList = $taskList.children;
 
-      const childrensTaskList = $taskList.children;
-
-      for (let task of childrensTaskList) {
+      for (let task of childrenTaskList) {
         if (task.dataset.id === data.id) {
           task.remove();
         }
@@ -64,12 +96,52 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
+  const $editButtons = document.querySelectorAll(".js-button-edit");
+
+  $editButtons.forEach(edit => assignEditButton(edit));
+
+  //Редактирование задачи
+  function assignEditButton(edit) {
+    edit.addEventListener("click", function(event) {
+      const data = event.target.dataset;
+      const childrenTaskList = $taskList.children;
+      for (let task of childrenTaskList) {
+        if (task.dataset.id === data.id) {
+          const editField = task.querySelector(".todo-list__item-textfield");
+          const currentTask = tasks.find(
+            task => task.id.toString() === data.id
+          );
+          const editText = task.querySelector(".todo-list__item-text");
+          currentTask.editing = !currentTask.editing;
+          editText.classList.toggle(
+            "todo-list__item-text-none",
+            currentTask.editing
+          );
+          editField.classList.toggle(
+            "todo-list__item-textfield-block",
+            currentTask.editing
+          );
+
+          if (currentTask.editing) {
+            edit.innerText = "Сохранить";
+            editField.value = currentTask.text;
+          } else {
+            edit.innerText = "Изменить";
+            currentTask.text = editField.value;
+            editText.innerHTML = editField.value;
+          }
+          console.log("tasks", task);
+        }
+      }
+    });
+  }
+
   function templateTask(task) {
-    return `  <li class="todo-list__item" data-id="${task.identifier}">
+    return `<li class="todo-list__item" data-id="${task.id}">
       <p class="todo-list__item-text">${task.text}</p>
       <input class="todo-list__item-textfield" type="text" />
-      <button class="todo-list__item-button">Изменить</button>
-      <button class="todo-list__item-button js-button-delete" data-id="${task.identifier}">Удалить</button>
-    </li> `;
+      <button class="todo-list__item-button js-button-edit" data-id="${task.id}">Изменить</button>
+      <button class="todo-list__item-button js-button-delete" data-id="${task.id}">Удалить</button>
+    </li>`;
   }
 });
