@@ -22,6 +22,8 @@
   }
 }
 .todo-list {
+  height: 300px;
+  overflow-y: scroll;
   &__item {
     list-style: none;
     display: flex;
@@ -35,24 +37,41 @@
       color: black;
       padding: 10px;
       width: 70%;
-      border-bottom: 1px solid lightgray;
-    }
 
-    &-text-none {
-      display: none;
+      &_none {
+        display: none;
+      }
+      &_done-text {
+        opacity: 0.5;
+        text-decoration: line-through;
+      }
     }
-
     &-textfield {
       display: none;
-    }
 
-    &-textfield-block {
-      display: block;
-      margin-right: auto;
-      @include Input();
+      &_block {
+        display: block;
+        font-size: $font-size;
+        border: 1px solid $hover-color;
+        background-color: white;
+        transition: all 0.2s;
+        height: 50px;
+        align-items: center;
+        margin-right: 10px;
+        color: black;
+        padding: 10px;
+        width: 70%;
+        &:hover {
+          background: $hover-color;
+        }
+        &:focus {
+          cursor: pointer;
+        }
+      }
     }
 
     &-button {
+      margin-left: 10px;
       @include Button();
     }
   }

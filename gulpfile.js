@@ -8,7 +8,9 @@ const uglify = require("gulp-uglify-es").default;
 const del = require("del");
 const browserSync = require("browser-sync").create();
 const sass = require("gulp-sass");
+const uuidv4 = require("uuid/v4");
 
+uuidv4();
 function styles() {
   return gulp
     .src(cssFiles)
