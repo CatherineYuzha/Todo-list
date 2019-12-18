@@ -1,0 +1,101 @@
+@import "variables";
+@import "mixins";
+.wrapper {
+  background: white;
+  width: $width-block;
+  margin: 80px auto;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 2px 0 $shadow, 0 3px 1px -2px $shadow, 0 1px 5px 0 $shadow;
+  @include font();
+}
+.header {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: $main-color;
+  text-align: center;
+
+  &__item {
+    display: inline-block;
+    color: white;
+    margin: 1rem auto;
+  }
+}
+.todo-list {
+  height: 300px;
+  overflow-y: scroll;
+  &__item {
+    list-style: none;
+    display: flex;
+    font-size: $font-size;
+    background-color: white;
+    transition: all 0.2s;
+    padding: 1em;
+    align-items: center;
+
+    &-text {
+      color: black;
+      padding: 10px;
+      width: 70%;
+
+      &_none {
+        display: none;
+      }
+      &_done-text {
+        opacity: 0.5;
+        text-decoration: line-through;
+      }
+    }
+    &-textfield {
+      display: none;
+
+      &_block {
+        display: block;
+        font-size: $font-size;
+        border: 1px solid $hover-color;
+        background-color: white;
+        transition: all 0.2s;
+        height: 50px;
+        align-items: center;
+        margin-right: 10px;
+        color: black;
+        padding: 10px;
+        width: 70%;
+        &:hover {
+          background: $hover-color;
+        }
+        &:focus {
+          cursor: pointer;
+        }
+      }
+    }
+
+    &-button {
+      margin-left: 10px;
+      @include Button();
+    }
+  }
+}
+
+.todo-form {
+  display: flex;
+  background-color: white;
+  border-top: 1px solid $blackout;
+  padding: 10px;
+
+  &__input {
+    flex: 1;
+    outline: none;
+    transition: all 0.2s;
+    @include Input();
+
+    &:focus {
+      border: 1px solid $main-color;
+    }
+  }
+
+  &__button {
+    margin-left: 10px;
+    @include Button();
+  }
+}

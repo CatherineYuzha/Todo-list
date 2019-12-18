@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/CatherineYuzha/Todo-list#readme",
   "dependencies": {
-    "del": "^5.1.0"
+    "del": "^5.1.0",
+    "uuid": "^3.3.3"
   }
 }

@@ -1,14 +1,16 @@
 const gulp = require("gulp");
 const concat = require("gulp-concat");
-const cssFiles = ["./src/scss/main.scss"];
-const jsFiles = ["./src/js/script.js"];
+const cssFiles = ["./src/scss/todo.scss"];
+const jsFiles = ["./src/js/todo.js"];
 const autoprefixer = require("gulp-autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const uglify = require("gulp-uglify-es").default;
 const del = require("del");
 const browserSync = require("browser-sync").create();
 const sass = require("gulp-sass");
+const uuidv4 = require("uuid/v4");
 
+uuidv4();
 function styles() {
   return gulp
     .src(cssFiles)

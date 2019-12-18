@@ -1,0 +1,43 @@
+@import "variables";
+@mixin font {
+  font-family: $font;
+  font-size: $font-size;
+}
+@mixin Button {
+  background: 0 0;
+  border: none;
+  border-radius: $border-radius;
+  color: black;
+  height: 45px;
+  margin: 0;
+  width: 135px;
+  padding: 0 16px;
+  display: inline-block;
+  font-family: $font;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  overflow: hidden;
+  will-change: box-shadow;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  line-height: 36px;
+  vertical-align: middle;
+
+  &:hover {
+    background-color: $hover-color;
+  }
+
+  &:active {
+    background-color: $hover-color;
+  }
+}
+@mixin Input {
+  color: black;
+  padding: 10px;
+  width: 70%;
+  border-radius: $border-radius;
+  border: 1px solid lightgray;
+}
