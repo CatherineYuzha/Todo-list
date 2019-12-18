@@ -11,9 +11,10 @@ document.addEventListener("DOMContentLoaded", function() {
   const $taskList = document.querySelector(".js-todo-list");
 
 
-
   tasks.forEach(item => {
-    $taskList.append(.templateTask(item));
+    console.log(item);
+    const task1= new Task(item);
+    $taskList.append(task1.template);
   });
 
   const $addTaskInput = document.querySelector(".js-input");
@@ -26,13 +27,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const task1= new Task(
       {
-        text: taskList.text
+        text: $addTaskInput.value
       }
     );
 
     taskList.add(task1.data);
     console.log(task1.data);
-    $taskList.append(templateTask(task1));
+    $taskList.append(task1.template);
     $addTaskInput.value = "";
     // assignRemoveButton(
     //   $taskList.lastElementChild.querySelector(".js-button-delete")

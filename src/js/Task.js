@@ -18,8 +18,8 @@ export default class Task {
 
      return {text, id, editing, done};
    }
-   
-   set templateTask(task) {
+
+   get template() {
      let outputTask = document.createElement('li');
      let textTask = document.createElement("p");
      let textFieldTask = document.createElement("textarea");
@@ -33,11 +33,11 @@ export default class Task {
      taskDeleteButton.classList.add("todo-list__item-button", "js-button-delete");
 
      textFieldTask.setAttribute('placeholder','Введите изменения...');
-     outputTask.dataset.id = task.id;
-     taskEditButton.dataset.id = task.id;
-     taskDeleteButton.dataset.id = task.id;
+     outputTask.dataset.id = this.id;
+     taskEditButton.dataset.id = this.id;
+     taskDeleteButton.dataset.id = this.id;
 
-     textTask.append(document.createTextNode(task.text));
+     textTask.append(document.createTextNode(this.text));
      taskEditButton.append(document.createTextNode("Изменить"));
      taskDeleteButton.append(document.createTextNode("Удалить"));
      outputTask.append(textTask, textFieldTask,taskEditButton, taskDeleteButton);
