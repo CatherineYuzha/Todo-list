@@ -1,4 +1,5 @@
 import Task from "./Task";
+import AddTaskForm from "./AddTaskForm";
 
 export default class TaskList {
   constructor(data) {
@@ -8,8 +9,6 @@ export default class TaskList {
   }
 
   eventHandlers() {
-    this.$addTaskInput = document.querySelector(".js-input");
-    this.$addTaskButton = document.querySelector(".js-button");
     this.$deleteButtons = document.querySelectorAll(".js-button-delete");
     this.$editButtons = document.querySelectorAll(".js-button-edit");
 
@@ -18,12 +17,13 @@ export default class TaskList {
     this.$editButtons.forEach(button => this.assignEditButton(button));
   }
 
-  outputElement() {
-    this.list.forEach(item => {
-      const newTask = new Task(item);
-      this.$taskList.append(newTask.template);
-    });
-  }
+
+     outputElement() {
+       this.list.forEach(item => {
+         const newTask = new Task(item);
+         this.$taskList.append(newTask.template);
+       });
+     }
 
   add(task) {
     this.list.push(task);
@@ -31,14 +31,6 @@ export default class TaskList {
 
   delete(id) {
     this.list = this.list.filter(item => item.id !== id);
-  }
-
-  deleteLast() {
-
-  }
-
-  deleteFirst() {
-
   }
 
   modify() {
@@ -115,4 +107,24 @@ export default class TaskList {
       }
     };
   }
+
+  assignCompletedTask(text) {
+   text.onclick = event => {
+     const data = event.target.dataset;
+     const childrenTaskList = this.$taskListNodes.children;
+
+     const $editText = task.querySelector(".todo-list__item-text");
+     childrenTaskList.find(task => task.id === data.id);
+
+     if (task.dataset.id === data.id) {
+       const currentTask = tasks.find(task => task.id === data.id);
+
+       currentTask.done = !currentTask.done;
+       $editText.classList.toggle(
+         "todo-list__item-text__done-text",
+         currentTask.done
+       );
+     }
+   };
+ }
 }

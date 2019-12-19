@@ -1,8 +1,8 @@
 import {generateId} from './utils.js';
+import TaskList from './TaskList.js';
 
 export default class Task {
   constructor(data) {
-    this.title = data.title;
     this.text = data.text ;
     this.id = data.id || generateId();
     this.editing = data.editing || false;
@@ -21,26 +21,26 @@ export default class Task {
 
    get template() {
      this.outputTask = document.createElement('li');
-     this.textTask = document.createElement('p');
-     this.textFieldTask = document.createElement('textarea');
      this.taskEditButton = document.createElement('button');
      this.taskDeleteButton = document.createElement('button');
+     const textTask = document.createElement('p');
+     const textFieldTask = document.createElement('textarea');
 
      this.outputTask.classList.add('todo-list__item');
-     this.textTask.classList.add('todo-list__item-text', 'js-text');
-     this.textFieldTask.classList.add('todo-list__item-textfield');
-     this.taskEditButton.classList.add('todo-list__item-button', 'js-button-edit');
-     this.taskDeleteButton.classList.add('todo-list__item-button', 'js-button-delete');
+     textTask.classList.add('todo-list__item-text');
+     textFieldTask.classList.add('todo-list__item-textfield');
+     this.taskEditButton.classList.add('todo-list__item-button');
+     this.taskDeleteButton.classList.add('todo-list__item-button');
 
-     this.textFieldTask.setAttribute('placeholder', 'Введите изменения...');
+     textFieldTask.setAttribute('placeholder', 'Введите изменения...');
      this.outputTask.dataset.id = this.id;
      this.taskEditButton.dataset.id = this.id;
      this.taskDeleteButton.dataset.id = this.id;
 
-     this.textTask.append(document.createTextNode(this.text));
+     textTask.append(document.createTextNode(this.text));
      this.taskEditButton.append(document.createTextNode('Изменить'));
      this.taskDeleteButton.append(document.createTextNode('Удалить'));
-     this.outputTask.append(this.textTask, this.textFieldTask, this.taskEditButton, this.taskDeleteButton);
+     this.outputTask.append(textTask, textFieldTask, this.taskEditButton, this.taskDeleteButton);
 
      return this.outputTask;
    }

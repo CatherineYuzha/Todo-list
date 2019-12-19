@@ -8,22 +8,4 @@ document.addEventListener("DOMContentLoaded", function() {
   taskList.outputElement();
   taskList.eventHandlers();
 
-  function assignCompletedTask(text) {
-    text.addEventListener("click", function(event) {
-      const data = event.target.dataset;
-      const childrenTaskList = $taskList.children;
-      const $editText = task.querySelector(".todo-list__item-text");
-
-      childrenTaskList.find(task => task.id === data.id);
-      if (task.dataset.id === data.id) {
-        const currentTask = tasks.find(task => task.id === data.id);
-
-        currentTask.done = !currentTask.done;
-        $editText.classList.toggle(
-          "todo-list__item-text__done-text",
-          currentTask.done
-        );
-      }
-    });
-  }
 });
