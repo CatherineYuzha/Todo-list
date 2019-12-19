@@ -20,29 +20,28 @@ export default class Task {
    }
 
    get template() {
-     let outputTask = document.createElement('li');
-     let textTask = document.createElement("p");
-     let textFieldTask = document.createElement("textarea");
-     let taskEditButton = document.createElement("button");
-     let taskDeleteButton = document.createElement("button");
+     this.outputTask = document.createElement('li');
+     this.textTask = document.createElement('p');
+     this.textFieldTask = document.createElement('textarea');
+     this.taskEditButton = document.createElement('button');
+     this.taskDeleteButton = document.createElement('button');
 
-     outputTask.classList.add("todo-list__item");
-     textTask.classList.add("todo-list__item-text", "js-text");
-     textFieldTask.classList.add("todo-list__item-textfield");
-     taskEditButton.classList.add("todo-list__item-button", "js-button-edit");
-     taskDeleteButton.classList.add("todo-list__item-button", "js-button-delete");
+     this.outputTask.classList.add('todo-list__item');
+     this.textTask.classList.add('todo-list__item-text', 'js-text');
+     this.textFieldTask.classList.add('todo-list__item-textfield');
+     this.taskEditButton.classList.add('todo-list__item-button', 'js-button-edit');
+     this.taskDeleteButton.classList.add('todo-list__item-button', 'js-button-delete');
 
-     textFieldTask.setAttribute('placeholder','Введите изменения...');
-     outputTask.dataset.id = this.id;
-     taskEditButton.dataset.id = this.id;
-     taskDeleteButton.dataset.id = this.id;
+     this.textFieldTask.setAttribute('placeholder', 'Введите изменения...');
+     this.outputTask.dataset.id = this.id;
+     this.taskEditButton.dataset.id = this.id;
+     this.taskDeleteButton.dataset.id = this.id;
 
-     textTask.append(document.createTextNode(this.text));
-     taskEditButton.append(document.createTextNode("Изменить"));
-     taskDeleteButton.append(document.createTextNode("Удалить"));
-     outputTask.append(textTask, textFieldTask,taskEditButton, taskDeleteButton);
+     this.textTask.append(document.createTextNode(this.text));
+     this.taskEditButton.append(document.createTextNode('Изменить'));
+     this.taskDeleteButton.append(document.createTextNode('Удалить'));
+     this.outputTask.append(this.textTask, this.textFieldTask, this.taskEditButton, this.taskDeleteButton);
 
-     return outputTask;
+     return this.outputTask;
    }
-
  }
