@@ -73,6 +73,10 @@
     &-button {
       margin-left: 10px;
       @include Button();
+
+      &_none {
+        display: none;
+      }
     }
   }
 }

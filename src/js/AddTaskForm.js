@@ -5,7 +5,7 @@ export default class AddTaskForm {
     this.$addTaskInput = document.querySelector(".js-input");
     this.$addTaskButton = document.querySelector(".js-button");
 
-    this.$addTaskButton.onclick = () => this.assignAddButton();
+    this.$addTaskButton.onclick = this.assignAddButton.bind(this);
     this.addTask = addTaskCallback;
   }
 
@@ -14,13 +14,8 @@ export default class AddTaskForm {
       return false;
     }
 
-    const newTask = new Task(
-      {
-        text: this.$addTaskInput.value
-      }
-    );
-
+    const task = { text: this.$addTaskInput.value };
     this.$addTaskInput.value = "";
-    this.addTask(newTask);
+    this.addTask(task);
   }
 }

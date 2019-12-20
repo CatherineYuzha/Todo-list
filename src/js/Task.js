@@ -1,47 +1,105 @@
-import {generateId} from './utils.js';
-import TaskList from './TaskList.js';
+import { generateId } from "./utils.js";
 
 export default class Task {
-  constructor(data) {
-    this.text = data.text ;
+  constructor(data, deleteCallback, editCallback, completeCallback) {
+    console.log();
+    this.text = data.text;
     this.id = data.id || generateId();
     this.editing = data.editing || false;
     this.done = data.done || false;
-   }
+    this.deleteTask = deleteCallback;
+    this.editTask = editCallback;
+    this.completeTask = completeCallback;
+  }
 
-   setDone(isDone) {
-     this.done = isDone;
-   }
+  get data() {
+    const { text, id, editing, done } = this;
 
-   get data() {
-     const {text, id, editing, done} = this;
+    return { text, id, editing, done };
+  }
 
-     return {text, id, editing, done};
-   }
+  get template() {
+    this.outputTask = document.createElement("li");
+    this.outputTask.classList.add("todo-list__item");
 
-   get template() {
-     this.outputTask = document.createElement('li');
-     this.taskEditButton = document.createElement('button');
-     this.taskDeleteButton = document.createElement('button');
-     const textTask = document.createElement('p');
-     const textFieldTask = document.createElement('textarea');
+    this.taskDeleteButton = document.createElement("button");
+    this.taskDeleteButton.classList.add("todo-list__item-button");
+    this.taskDeleteButton.onclick = this.assignRemoveButton.bind(this);
+    this.taskDeleteButton.append(document.createTextNode("Удалить"));
 
-     this.outputTask.classList.add('todo-list__item');
-     textTask.classList.add('todo-list__item-text');
-     textFieldTask.classList.add('todo-list__item-textfield');
-     this.taskEditButton.classList.add('todo-list__item-button');
-     this.taskDeleteButton.classList.add('todo-list__item-button');
+    this.taskEditButton = document.createElement("button");
+    this.taskEditButton.classList.add("todo-list__item-button");
+    this.taskEditButton.onclick = this.assignEditButton.bind(this, false);
+    this.taskEditButton.append(document.createTextNode("Изменить"));
 
-     textFieldTask.setAttribute('placeholder', 'Введите изменения...');
-     this.outputTask.dataset.id = this.id;
-     this.taskEditButton.dataset.id = this.id;
-     this.taskDeleteButton.dataset.id = this.id;
+    this.editCancelButton = document.createElement("button");
+    this.editCancelButton.classList.add("todo-list__item-button");
+    this.editCancelButton.classList.add("todo-list__item-button_none");
+    this.editCancelButton.onclick = this.assignEditButton.bind(this, true);
+    this.editCancelButton.append(document.createTextNode("Отмена"));
 
-     textTask.append(document.createTextNode(this.text));
-     this.taskEditButton.append(document.createTextNode('Изменить'));
-     this.taskDeleteButton.append(document.createTextNode('Удалить'));
-     this.outputTask.append(textTask, textFieldTask, this.taskEditButton, this.taskDeleteButton);
+    this.textTask = document.createElement("p");
+    this.textTask.onclick = this.assignCompleteTask.bind(this);
+    this.textTask.classList.add("todo-list__item-text");
+    this.textTask.append(document.createTextNode(this.text));
 
-     return this.outputTask;
-   }
- }
+    this.textFieldTask = document.createElement("textarea");
+    this.textFieldTask.classList.add("todo-list__item-textfield");
+    this.textFieldTask.setAttribute("placeholder", "Введите изменения...");
+
+    this.outputTask.append(
+      this.textTask,
+      this.textFieldTask,
+      this.taskEditButton,
+      this.taskDeleteButton,
+      this.editCancelButton
+    );
+
+    return this.outputTask;
+  }
+
+  assignRemoveButton() {
+    this.outputTask.remove();
+    this.deleteTask(this.id);
+  }
+
+  assignEditButton(isCancel) {
+    if (!isCancel && !this.textFieldTask.value && this.editing) return false;
+    this.editing = !this.editing;
+
+    this.taskDeleteButton.classList.toggle(
+      "todo-list__item-button_none",
+      this.editing
+    );
+
+    this.editCancelButton.classList.toggle(
+      "todo-list__item-button_none",
+      !this.editing
+    );
+
+    this.textTask.classList.toggle("todo-list__item-text_none", this.editing);
+    this.textFieldTask.classList.toggle(
+      "todo-list__item-textfield_block",
+      this.editing
+    );
+
+    if (this.editing) {
+      this.taskEditButton.innerText = "Сохранить";
+      this.textFieldTask.value = this.text;
+    } else {
+      this.taskEditButton.innerText = "Изменить";
+      if (!isCancel) {
+        this.text = this.textFieldTask.value;
+        this.textTask.innerHTML = this.textFieldTask.value;
+      }
+    }
+    this.editTask(this);
+  }
+
+  assignCompleteTask() {
+    this.done = !this.done;
+    this.textTask.classList.toggle("todo-list__item-text_done-text");
+    this.taskEditButton.disabled = this.done;
+    this.completeTask(this);
+  }
+}
