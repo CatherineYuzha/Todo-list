@@ -1,9 +1,19 @@
-import Task from "./Task";
+import Todo from "./Todo";
 
 export default class AddTaskForm {
   constructor(addTaskCallback) {
+    this.hjj = document.querySelector(".wrapper");
     this.addTaskForm = document.createElement("div");
     this.addTaskForm.classList.add("todo-form");
+
+    this.header = document.createElement("header");
+    this.addTaskForm.classList.add("header");
+    console.log(this.header);
+
+    this.h1 = document.createElement("h1");
+    this.h1.classList.add("header__item");
+    this.h1.append(document.createTextNode("Список дел"));
+    this.header.append(this.h1);
 
     this.$addTaskInput = document.createElement("input");
     this.$addTaskInput.classList.add("todo-form__input");
@@ -16,8 +26,9 @@ export default class AddTaskForm {
 
     this.addTaskForm.append(this.$addTaskInput, this.$addTaskButton);
     this.$addTaskButton.onclick = this.assignAddButton.bind(this);
-    document.body.insertBefore(addTaskForm, script);
+    this.hjj.prepend(this.header, this.addTaskForm);
     this.addTask = addTaskCallback;
+    console.log(this.addTask);
   }
 
   assignAddButton() {

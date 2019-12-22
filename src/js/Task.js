@@ -1,15 +1,21 @@
 import { generateId } from "./utils.js";
 
 export default class Task {
-  constructor(data, deleteCallback, editCallback, completeCallback) {
-    console.log();
+  constructor(
+    data,
+    deleteCallback,
+    editCallback,
+    completeCallback,
+    upItemCallback
+  ) {
     this.text = data.text;
-    this.id = data.id || generateId();
+    this.id = data.id == 0 ? 0 : data.id || generateId();
     this.editing = data.editing || false;
     this.done = data.done || false;
     this.deleteTask = deleteCallback;
     this.editTask = editCallback;
     this.completeTask = completeCallback;
+    this.upItem = upItemCallback;
   }
 
   get data() {
@@ -21,6 +27,7 @@ export default class Task {
   get template() {
     this.outputTask = document.createElement("li");
     this.outputTask.classList.add("todo-list__item");
+    this.outputTask.setAttribute("id", this.id);
 
     this.taskDeleteButton = document.createElement("button");
     this.taskDeleteButton.classList.add("todo-list__item-button");
@@ -47,7 +54,19 @@ export default class Task {
     this.textFieldTask.classList.add("todo-list__item-textfield");
     this.textFieldTask.setAttribute("placeholder", "Введите изменения...");
 
+    this.upButton = document.createElement("button");
+    this.upButton.classList.add("todo-list__item-button");
+    this.upButton.onclick = this.assignUp.bind(this);
+    this.upButton.append(document.createTextNode("Вверх"));
+
+    this.downButton = document.createElement("button");
+    this.downButton.classList.add("todo-list__item-button");
+    this.downButton.onclick = this.assignDown.bind(this);
+    this.downButton.append(document.createTextNode("Вниз"));
+
     this.outputTask.append(
+      this.upButton,
+      this.downButton,
       this.textTask,
       this.textFieldTask,
       this.taskEditButton,
@@ -102,4 +121,10 @@ export default class Task {
     this.taskEditButton.disabled = this.done;
     this.completeTask(this);
   }
+
+  assignUp() {
+    this.upItem(this.id);
+  }
+
+  assignDown() {}
 }
