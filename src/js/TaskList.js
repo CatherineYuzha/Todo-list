@@ -20,12 +20,46 @@ export default class TaskList {
     });
   }
 
+  upItem(id) {
+    let index;
+    console.log(this.list);
+    this.list.forEach((item, index1) => {
+      if (item.id === id) {
+        index = index1;
+        return;
+      }
+    });
+    if (index !== 0) {
+      const a = this.list[index - 1];
+      this.list[index - 1] = this.list[index];
+      this.list[index] = a;
+    }
+  }
+
+  downItem(id) {
+    let index;
+    console.log(this.list);
+    this.list.forEach((item, index1) => {
+      if (item.id === id) {
+        index = index1;
+        return;
+      }
+    });
+    if (index !== this.list.length - 1) {
+      const a = this.list[index + 1];
+      this.list[index + 1] = this.list[index];
+      this.list[index] = a;
+    }
+  }
+
   add(task) {
     const newTask = new Task(
       task,
       this.delete.bind(this),
       this.modify.bind(this),
-      this.complete.bind(this)
+      this.complete.bind(this),
+      this.upItem.bind(this),
+      this.downItem.bind(this)
     );
     this.list.push(newTask.data);
     this.$taskList.append(newTask.template);
