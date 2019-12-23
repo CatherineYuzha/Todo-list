@@ -4,7 +4,4 @@ import "../scss/todo.scss";
 
 document.addEventListener("DOMContentLoaded", function() {
   let taskList = new TaskList({ list });
-
-  //taskList.outputElement();
-  //taskList.eventHandlers();
 });

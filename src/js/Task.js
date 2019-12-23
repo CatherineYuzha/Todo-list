@@ -6,7 +6,8 @@ export default class Task {
     deleteCallback,
     editCallback,
     completeCallback,
-    upItemCallback
+    upItemCallback,
+    downItemCallback
   ) {
     this.text = data.text;
     this.id = data.id == 0 ? 0 : data.id || generateId();
@@ -16,6 +17,7 @@ export default class Task {
     this.editTask = editCallback;
     this.completeTask = completeCallback;
     this.upItem = upItemCallback;
+    this.downItem = downItemCallback;
   }
 
   get data() {
@@ -83,7 +85,9 @@ export default class Task {
   }
 
   assignEditButton(isCancel) {
-    if (!isCancel && !this.textFieldTask.value && this.editing) return false;
+    if (!isCancel && !this.textFieldTask.value && this.editing) {
+      return false;
+    }
     this.editing = !this.editing;
 
     this.taskDeleteButton.classList.toggle(
@@ -123,8 +127,10 @@ export default class Task {
   }
 
   assignUp() {
-    this.upItem(this.id);
+    this.upItem(this.id, this.outputTask);
   }
 
-  assignDown() {}
+  assignDown() {
+    this.downItem(this.id, this.outputTask);
+  }
 }

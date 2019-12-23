@@ -2,13 +2,12 @@ import Todo from "./Todo";
 
 export default class AddTaskForm {
   constructor(addTaskCallback) {
-    this.hjj = document.querySelector(".wrapper");
+    this.taskListWrapper = document.querySelector(".wrapper");
     this.addTaskForm = document.createElement("div");
     this.addTaskForm.classList.add("todo-form");
 
     this.header = document.createElement("header");
-    this.addTaskForm.classList.add("header");
-    console.log(this.header);
+    this.header.classList.add("header");
 
     this.h1 = document.createElement("h1");
     this.h1.classList.add("header__item");
@@ -22,13 +21,11 @@ export default class AddTaskForm {
     this.$addTaskButton = document.createElement("button");
     this.$addTaskButton.classList.add("todo-form__button");
     this.$addTaskButton.append(document.createTextNode("Добавить"));
-    this.$addTaskButton.setAttribute("onclick", "return false");
 
     this.addTaskForm.append(this.$addTaskInput, this.$addTaskButton);
     this.$addTaskButton.onclick = this.assignAddButton.bind(this);
-    this.hjj.prepend(this.header, this.addTaskForm);
+    this.taskListWrapper.prepend(this.header, this.addTaskForm);
     this.addTask = addTaskCallback;
-    console.log(this.addTask);
   }
 
   assignAddButton() {
